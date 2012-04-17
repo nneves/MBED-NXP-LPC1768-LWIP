@@ -1,0 +1,41 @@
+NNeves notes on how to compile LwIP 1.4.0 (opensource network stack for microcontrollers)
+on the MBed NXP LPC1768 without using an RTOS. 
+
+This code is highly experimental and is a result of some code-gluing from serveral sources,
+based on the this original idea:
+http://www.embeddedrelated.com/groups/lpc2000/show/53822.php
+
+Also, have used a big hammer to iron some LwIP code to force it to compile without OS support,
+so be warned and please notice that this is experimental code only.
+
+Now, my disclaimer: I don't really understand/master this code, just made some changes for it 
+to do something basic, send TCP data from the MBED to another device (TCP Hello World).
+
+Required hardware: MBed bundle with Ethernet breakout board 
+(http://www.coolcomponents.co.uk/catalog/mbed-lpc1768-bundle-p-783.html)
+
+Cross-compiling tool: use the same from the R2C2 project:
+http://www.3dprinting-r2c2.com/?q=content/development#Installing_ARM_toolchain
+
+//------------------------------
+
+1) extract sourcecode 
+2) open the main.c and change the destination IP address (ulIPAddrComputer) at line 219
+   currently set/hardcoded to my laptop ip 192.168.1.30 in hex notation
+3) run 'make' commnad
+4) copy the FLASH_RUN/lwip.bin to the MBED device (don not reset yet)
+5) open extra shell and run $> sudo nc -lp 80 (pc will listen to incoming TCP data)
+6) reset the MBED ... it will now initialize the Ethernet hardware and send TCP data to the 
+   configured destination ip ... netcat will then show the "Hello World" message.
+
+No more time for aditional tests, but proof-of-concept acheived (for now)!
+
+//------------------------------
+Notes to myself (please ignore):
+- requires arm-2010.09-51-arm-none-eabi-i686-pc-linux-gnu.tar.bz2 installed in some place 
+  like /usr/local/arm
+
+  source: http://www.codesourcery.com/sgpp/lite/arm/portal/package7813/public/arm-none-eabi/arm-2010.09-51-arm-none-eabi-i686-pc-linux-gnu.tar.bz2
+
+- set .bashrc line (restart shell):
+    export PATH=$PATH:/usr/local/arm/arm-2010.09/bin
