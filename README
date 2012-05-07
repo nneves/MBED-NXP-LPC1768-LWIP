@@ -16,13 +16,11 @@ http://www.3dprinting-r2c2.com/?q=content/development#Installing_ARM_toolchain
 //------------------------------
 
 1) extract sourcecode 
-2) open the main.c and change the destination IP address (ulIPAddrComputer) at line 219
-   currently set/hardcoded to my laptop ip 192.168.1.30 in hex notation
+2) open the main.c and change the destination IP address (ulIPAddrComputer) at line 219 currently set/hardcoded to my laptop ip 192.168.1.30 in hex notation
 3) run 'make' commnad
 4) copy the FLASH_RUN/lwip.bin to the MBED device (don not reset yet)
 5) open extra shell and run $> sudo nc -lp 80 (pc will listen to incoming TCP data)
-6) reset the MBED ... it will now initialize the Ethernet hardware and send TCP data to the 
-   configured destination ip ... netcat will then show the "Hello World" message.
+6) reset the MBED ... it will now initialize the Ethernet hardware and send TCP data to the configured destination ip ... netcat will then show the "Hello World" message.
 
 No more time for aditional tests, but proof-of-concept acheived (for now)!
 
